@@ -2,16 +2,7 @@
 
 Porting Wordle onto the TI-84 **Plus CE** using the CE C/C++ Toolchain.
 
-<style type="text/css">
-    img {
-        width: 40%;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
-</style>
-
-![example image](img/IMG_4787.JPG)
+![example image](img/IMG_4787.JPG =200x200)
 
 ## How to play
 
