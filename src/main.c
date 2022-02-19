@@ -55,57 +55,7 @@ char prevkey;
 // game loop
 u8 gameRunning = 1;
 
-void clearScreenSafe(color clr) {
-    gfx_SetColor(clr);
-    gfx_FillRectangle(0, 0, LCD_WIDTH, LCD_HEIGHT);
-}
-void drawGrid() {
-    gfx_SetColor(GRAY);
-
-    // for some reason x is across and y is down
-    // opposite to how 2d arrays are usually done
-    u8 i, j;
-    for (i = 0; i < COLS; i++) {
-        for (j = 0; j < ROWS; j++) {
-            gfx_Rectangle(START_X + i * (SIZE + GAP), START_Y + j * (SIZE + GAP), SIZE, SIZE);
-        }
-    }
-}
-void dispLetter(char letter, u8 x, u8 y) {
-    u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
-
-    char nullTerminated[2] = {letter, '\0'};
-    os_FontDrawText(nullTerminated, (posx) / 2 + 3, (posy) / 2 + 2);
-
-    // cover edges with rectangle
-    gfx_SetColor(GRAY);
-    gfx_Rectangle(posx, posy, SIZE, SIZE);
-}
-void clearSquare(u8 x, u8 y) {
-    u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
-    gfx_SetColor(WHITE);
-    gfx_FillRectangle(posx, posy, SIZE, SIZE);
-    gfx_SetColor(GRAY);
-    gfx_Rectangle(posx, posy, SIZE, SIZE);
-}
-void fillSquare(u8 x, u8 y, color clr) {
-    u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
-    gfx_SetColor(clr);
-    gfx_FillRectangle(posx, posy, SIZE, SIZE);
-    gfx_SetColor(GRAY);
-    gfx_Rectangle(posx, posy, SIZE, SIZE);
-}
-void enterLetter(char letter) {
-    if (colPtr == COLS) return;
-    dispLetter(letter, colPtr, rowPtr);
-    guess[colPtr] = letter;
-    colPtr++;
-}
-void backspace() {
-    if (colPtr == 0) return;
-    colPtr--;
-    clearSquare(colPtr, rowPtr);
-}
+// helper functions
 void copyStr(char *dest, char *src) {
     u8 i;
     for (i = 0; i < COLS; i++) {
@@ -130,6 +80,61 @@ s8 strCmp(char *str1, char *str2) {
         if (str1[i] < str2[i]) return -1;
     }
     return 0;
+}
+
+// render functions
+void clearScreenSafe(color clr) {
+    gfx_SetColor(clr);
+    gfx_FillRectangle(0, 0, LCD_WIDTH, LCD_HEIGHT);
+}
+void drawGrid() {
+    gfx_SetColor(GRAY);
+
+    // for some reason x is across and y is down
+    // opposite to how 2d arrays are usually done
+    u8 i, j;
+    for (i = 0; i < COLS; i++) {
+        for (j = 0; j < ROWS; j++) {
+            gfx_Rectangle(START_X + i * (SIZE + GAP), START_Y + j * (SIZE + GAP), SIZE, SIZE);
+        }
+    }
+}
+void clearSquare(u8 x, u8 y) {
+    u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
+    gfx_SetColor(WHITE);
+    gfx_FillRectangle(posx, posy, SIZE, SIZE);
+    gfx_SetColor(GRAY);
+    gfx_Rectangle(posx, posy, SIZE, SIZE);
+}
+void fillSquare(u8 x, u8 y, color clr) {
+    u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
+    gfx_SetColor(clr);
+    gfx_FillRectangle(posx, posy, SIZE, SIZE);
+    gfx_SetColor(GRAY);
+    gfx_Rectangle(posx, posy, SIZE, SIZE);
+}
+void dispLetter(char letter, u8 x, u8 y) {
+    u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
+
+    char nullTerminated[2] = {letter, '\0'};
+    os_FontDrawText(nullTerminated, (posx) / 2 + 3, (posy) / 2 + 2);
+
+    // cover edges with rectangle
+    gfx_SetColor(GRAY);
+    gfx_Rectangle(posx, posy, SIZE, SIZE);
+}
+
+// wordle functions
+void enterLetter(char letter) {
+    if (colPtr == COLS) return;
+    dispLetter(letter, colPtr, rowPtr);
+    guess[colPtr] = letter;
+    colPtr++;
+}
+void backspace() {
+    if (colPtr == 0) return;
+    colPtr--;
+    clearSquare(colPtr, rowPtr);
 }
 char handleKeys() {
     kb_Scan();
@@ -326,6 +331,12 @@ void evaluateGuess() {
         gameLoss();
     }
 }
+
+void init() {
+    os_FontSelect(os_LargeFont);
+    srandom(rtc_Time());
+    resetGame();
+}
 void mainGame() {
     char ch = handleKeys();
     if (ch == prevkey) return;
@@ -341,11 +352,6 @@ void mainGame() {
     } else {
         enterLetter(ch);
     }
-}
-void init() {
-    os_FontSelect(os_LargeFont);
-    srandom(rtc_Time());
-    resetGame();
 }
 int main(void) {
     gfx_Begin();
