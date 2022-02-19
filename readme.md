@@ -2,11 +2,38 @@
 
 Porting Wordle onto the TI-84 **Plus CE** using the CE C/C++ Toolchain.
 
+<style type="text/css">
+    img {
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>
+
+![example image](img/IMG_4787.JPG)
+
 ## How to play
 
 - Enter letters by pressing keys with corresponding letter in GREEN (alpha keys)
 - Submit word by pressing the "enter" key
 - Exit the game by pressing the "clear" key
+
+## Installation
+
+1. Download the [TI Connect Ce Software](https://education.ti.com/en/software/details/en/CA9C74CAD02440A69FDC7189D7E1B6C2/swticonnectcesoftware)
+2. Download the latest release of TI84 Wordle (.8xp)
+3. Connect your TI-84 Plus CE to your computer with a Mini-B USB cable
+4. The calculator should pop up on the Connect CE Software
+5. Click the button with an arrow pointing out of a computer (top left of window)
+6. Select the .8xp binary
+7. Click "send"
+
+### Running Wordle
+
+On your calculator, press:
+
+[prgm][enter]
 
 ## About
 
