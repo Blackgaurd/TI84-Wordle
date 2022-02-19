@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A933 D1A933             0h
 .init            D1A933 D1A95D            2Ah
 .fini            D1A95D D1A991            34h
-.text            D1A991 D1B4F9           B68h
-.data            D1B4F9 D25347          9E4Eh
-.rodata          D25347 D25398            51h
+.text            D1A991 D1B6AD           D1Ch
+.data            D1B6AD D254FE          9E51h
+.rodata          D254FE D25563            65h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -33,20 +33,22 @@ _os_DisableHomeTextBuffer = D1A991
 _os_EnableHomeTextBuffer  = D1A9A3
 _random                   = D1A9B5
 _srandom                  = D1AA0C
-__state                   = D1B4F9
+__state                   = D1B6AD
 _os_FontDrawText          = 021E00
 _os_FontSelect            = 021E28
 __frameset                = D1AA23
 __frameset0               = D1AA31
+__iand                    = 000134
+__idivs                   = 00013C
 __imulu                   = 000158
 __iremu                   = 000170
 __ishru                   = 000184
 __sand                    = 000200
 __setflag                 = 000218
-.missingappvar            = D25347
-.libloadname              = D2534C
+.missingappvar            = D254FE
+.libloadname              = D25503
 .libloadnamelen           = 000007
-.webaddress               = D25354
+.webaddress               = D2550B
 __start                   = D1A933
 ___exithl                 = D1A95D
 skip._exit                = D1A95D
@@ -54,39 +56,43 @@ skip.__Exit               = D1A95D
 skip._abort               = D1A95D
 _exit.sp                  = D1A95E
 _exit.flash_wait_states   = D1A968
-_clearScreenSafe          = D1AA3C
-_drawGrid                 = D1AA62
-_dispLetter               = D1AAD5
-_clearSquare              = D1AB55
-_fillSquare               = D1ABC5
-_enterLetter              = D1AC3A
-_backspace                = D1AC73
-_copyStr                  = D1AC8F
-_inStr                    = D1ACB5
-_strCmp                   = D1ACE2
-_handleKeys               = D1AD3F
-_inDictionary             = D1AF53
-_inSelected               = D1B010
-_resetGame                = D1B0CD
-_gameWin                  = D1B10C
-_gameLoss                 = D1B1D0
-_evaluateGuess            = D1B294
-_mainGame                 = D1B471
-_init                     = D1B4BC
-_main                     = D1B4DE
-_SELECTED                 = D1B509
-_DICTIONARY               = D1E222
+_copyStr                  = D1AA3C
+_inStr                    = D1AA62
+_strCmp                   = D1AA8F
+_revealAnswer             = D1AAEC
+_clearScreenSafe          = D1AB11
+_drawGrid                 = D1AB37
+_clearSquare              = D1ABAA
+_fillSquare               = D1AC1A
+_dispLetter               = D1AC8F
+_winLossDisplay           = D1AD0F
+_enterLetter              = D1ADDF
+_backspace                = D1AE18
+_handleKeys               = D1AE34
+_inDictionary             = D1B048
+_inSelected               = D1B105
+_resetGame                = D1B1C2
+_gameWin                  = D1B24F
+_gameLoss                 = D1B34C
+_evaluateGuess            = D1B448
+_init                     = D1B625
+_mainGame                 = D1B647
+_main                     = D1B692
+_SELECTED                 = D1B6BD
+_DICTIONARY               = D1E3D6
 _rowPtr                   = D052C6
 _colPtr                   = D052C7
 _answer                   = D052C8
 _guess                    = D052CE
-L_.str                    = D25369
-_YOU_WIN                  = D2533D
-L_.str.1                  = D25372
-_YOU_LOSE                 = D25340
-L_.str.2                  = D2537C
-_PLAY_AGAIN               = D25343
-_gameRunning              = D25346
+L_.str                    = D25520
+_YOU_WIN                  = D254F1
+L_.str.1                  = D25529
+_YOU_LOSE                 = D254F4
+L_.str.2                  = D25533
+_PLAY_AGAIN               = D254F7
+L_.str.3                  = D2554F
+_reveal                   = D254FA
+_gameRunning              = D254FD
 _prevkey                  = D052D4
 _#gfx_Begin               = D1A901
 _#gfx_End                 = D1A905

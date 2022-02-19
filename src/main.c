@@ -31,9 +31,9 @@ const u16 START_X = (LCD_WIDTH - COLS * SIZE - GAP * (COLS - 1)) / 2;
 const u16 START_Y = (LCD_HEIGHT - ROWS * SIZE - GAP * (ROWS - 1)) / 2;
 
 // color codes
+const color LIGHT_GRAY = 0xde;  // kinda looks blue im no artist
 const color GRAY = 0xb5;
-const color LIGHT_GRAY = 0x4a;
-const color DARK_GRAY = 0x21;
+const color DARK_GRAY = 0x4a;
 const color RED = 0xe0;
 const color YELLOW = 0xe5;
 const color GREEN = 0x04;
@@ -48,6 +48,7 @@ char answer[COLS + 1] = {'\0'}, guess[COLS + 1] = {'\0'};
 const char *YOU_WIN = "YOU WIN!";
 const char *YOU_LOSE = "YOU LOSE!";
 const char *PLAY_AGAIN = "Press \"enter\" to play again";
+char *reveal = "The word was:      ";
 
 // keypress safety
 char prevkey;
@@ -80,6 +81,11 @@ s8 strCmp(char *str1, char *str2) {
         if (str1[i] < str2[i]) return -1;
     }
     return 0;
+}
+void revealAnswer() {
+    for (u8 i = 0; i < COLS; i++) {
+        reveal[i + 14] = answer[i] - 'a' + 'A';
+    }
 }
 
 // render functions
@@ -122,6 +128,20 @@ void dispLetter(char letter, u8 x, u8 y) {
     // cover edges with rectangle
     gfx_SetColor(GRAY);
     gfx_Rectangle(posx, posy, SIZE, SIZE);
+}
+void winLossDisplay(u8 pos) {
+    // pos: 0 is top, 1 is bottom
+    const u16 width = gfx_GetStringWidth(PLAY_AGAIN) + 50;
+    const u16 height = 100;
+    const u8 x = (LCD_WIDTH - width) / 2, y = (pos ? 0 : LCD_HEIGHT / 2) + (LCD_HEIGHT / 2 - height) / 2;
+
+    // draw outline
+    gfx_SetColor(BLACK);
+    gfx_Rectangle(x - 1, y - 1, width + 2, height + 2);
+    gfx_Rectangle(x - 2, y - 2, width + 4, height + 4);
+    // fill in
+    gfx_SetColor(LIGHT_GRAY);
+    gfx_FillRectangle(x, y, width, height);
 }
 
 // wordle functions
@@ -251,13 +271,15 @@ void resetGame() {
 #endif
 }
 void gameWin() {
-    clearScreenSafe(WHITE);
+    u8 pos = (rowPtr >= ROWS / 2);
+    winLossDisplay(pos);
+
     gfx_SetTextFGColor(GREEN);
     gfx_SetTextScale(2, 2);
-    gfx_PrintStringXY(YOU_WIN, (LCD_WIDTH - gfx_GetStringWidth(YOU_WIN)) / 2, LCD_HEIGHT / 2);
+    gfx_PrintStringXY(YOU_WIN, (LCD_WIDTH - gfx_GetStringWidth(YOU_WIN)) / 2, LCD_HEIGHT / 4 - 16 + (pos ? 0 : LCD_HEIGHT / 2));
     gfx_SetTextFGColor(BLACK);
     gfx_SetTextScale(1, 1);
-    gfx_PrintStringXY(PLAY_AGAIN, (LCD_WIDTH - gfx_GetStringWidth(PLAY_AGAIN)) / 2, LCD_HEIGHT / 2 + 20);
+    gfx_PrintStringXY(PLAY_AGAIN, (LCD_WIDTH - gfx_GetStringWidth(PLAY_AGAIN)) / 2, LCD_HEIGHT / 4 + 6 + (pos ? 0 : LCD_HEIGHT / 2));
     char ch;
     while (1) {
         ch = handleKeys();
@@ -265,17 +287,21 @@ void gameWin() {
             resetGame();
             break;
         }
+        if (!gameRunning) break;
         prevkey = ch;
     }
 }
 void gameLoss() {
-    clearScreenSafe(WHITE);
+    winLossDisplay(0);
+
     gfx_SetTextFGColor(RED);
     gfx_SetTextScale(2, 2);
-    gfx_PrintStringXY(YOU_LOSE, (LCD_WIDTH - gfx_GetStringWidth(YOU_LOSE)) / 2, LCD_HEIGHT / 2);
+    gfx_PrintStringXY(YOU_LOSE, (LCD_WIDTH - gfx_GetStringWidth(YOU_LOSE)) / 2, LCD_HEIGHT / 4 - 20);
     gfx_SetTextFGColor(BLACK);
     gfx_SetTextScale(1, 1);
-    gfx_PrintStringXY(PLAY_AGAIN, (LCD_WIDTH - gfx_GetStringWidth(PLAY_AGAIN)) / 2, LCD_HEIGHT / 2 + 20);
+    revealAnswer();
+    gfx_PrintStringXY(reveal, (LCD_WIDTH - gfx_GetStringWidth(reveal)) / 2, LCD_HEIGHT / 4 + 3);
+    gfx_PrintStringXY(PLAY_AGAIN, (LCD_WIDTH - gfx_GetStringWidth(PLAY_AGAIN)) / 2, LCD_HEIGHT / 4 + 20);
     char ch;
     while (1) {
         ch = handleKeys();
@@ -283,6 +309,7 @@ void gameLoss() {
             resetGame();
             break;
         }
+        if (!gameRunning) break;
         prevkey = ch;
     }
 }
@@ -317,7 +344,7 @@ void evaluateGuess() {
             ansFreq[guess[i] - 'a']--;
             fillSquare(i, rowPtr, YELLOW);
         } else {
-            fillSquare(i, rowPtr, LIGHT_GRAY);
+            fillSquare(i, rowPtr, DARK_GRAY);
         }
         dispLetter(guess[i], i, rowPtr);
     }
