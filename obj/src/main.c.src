@@ -1075,13 +1075,6 @@ BB14_7:
 	section	.text,"ax",@progbits
 	public	_resetGame
 _resetGame:
-	ld	hl, -12
-	call	__frameset
-	or	a, a
-	sbc	hl, hl
-	ld	(ix - 9), hl
-	lea	hl, ix - 6
-	ld	(ix - 12), hl
 	ld	hl, -1
 	push	hl
 	call	_clearScreenSafe
@@ -1100,42 +1093,11 @@ _resetGame:
 	ld	hl, _answer
 	push	hl
 	call	_copyStr
-	ld	iy, (ix - 12)
 	pop	hl
 	pop	hl
 	xor	a, a
 	ld	(_colPtr), a
 	ld	(_rowPtr), a
-	ld	de, 5
-BB15_1:
-	ld	hl, (ix - 9)
-	or	a, a
-	sbc	hl, de
-	jq	z, BB15_2
-	ld	hl, _answer
-	push	de
-	pop	bc
-	ld	de, (ix - 9)
-	add	hl, de
-	ld	a, (hl)
-	lea	hl, iy
-	add	hl, de
-	ld	(hl), a
-	inc	de
-	ld	(ix - 9), de
-	push	bc
-	pop	de
-	jq	BB15_1
-BB15_2:
-	ld	(ix - 1), 0
-	or	a, a
-	sbc	hl, hl
-	push	hl
-	push	hl
-	push	iy
-	call	_os_FontDrawText
-	ld	sp, ix
-	pop	ix
 	ret
 	section	.text,"ax",@progbits
 
@@ -1273,8 +1235,7 @@ BB16_9:
 _gameLoss:
 	ld	hl, -3
 	call	__frameset
-	or	a, a
-	sbc	hl, hl
+	ld	hl, 1
 	push	hl
 	call	_winLossDisplay
 	pop	hl

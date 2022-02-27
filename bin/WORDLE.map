@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A933 D1A933             0h
 .init            D1A933 D1A95D            2Ah
 .fini            D1A95D D1A991            34h
-.text            D1A991 D1B6AD           D1Ch
-.data            D1B6AD D254FE          9E51h
-.rodata          D254FE D25563            65h
+.text            D1A991 D1B660           CCFh
+.data            D1B660 D254B1          9E51h
+.rodata          D254B1 D25516            65h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -33,7 +33,7 @@ _os_DisableHomeTextBuffer = D1A991
 _os_EnableHomeTextBuffer  = D1A9A3
 _random                   = D1A9B5
 _srandom                  = D1AA0C
-__state                   = D1B6AD
+__state                   = D1B660
 _os_FontDrawText          = 021E00
 _os_FontSelect            = 021E28
 __frameset                = D1AA23
@@ -45,10 +45,10 @@ __iremu                   = 000170
 __ishru                   = 000184
 __sand                    = 000200
 __setflag                 = 000218
-.missingappvar            = D254FE
-.libloadname              = D25503
+.missingappvar            = D254B1
+.libloadname              = D254B6
 .libloadnamelen           = 000007
-.webaddress               = D2550B
+.webaddress               = D254BE
 __start                   = D1A933
 ___exithl                 = D1A95D
 skip._exit                = D1A95D
@@ -72,27 +72,27 @@ _handleKeys               = D1AE34
 _inDictionary             = D1B048
 _inSelected               = D1B105
 _resetGame                = D1B1C2
-_gameWin                  = D1B24F
-_gameLoss                 = D1B34C
-_evaluateGuess            = D1B448
-_init                     = D1B625
-_mainGame                 = D1B647
-_main                     = D1B692
-_SELECTED                 = D1B6BD
-_DICTIONARY               = D1E3D6
+_gameWin                  = D1B201
+_gameLoss                 = D1B2FE
+_evaluateGuess            = D1B3FB
+_init                     = D1B5D8
+_mainGame                 = D1B5FA
+_main                     = D1B645
+_SELECTED                 = D1B670
+_DICTIONARY               = D1E389
 _rowPtr                   = D052C6
 _colPtr                   = D052C7
 _answer                   = D052C8
 _guess                    = D052CE
-L_.str                    = D25520
-_YOU_WIN                  = D254F1
-L_.str.1                  = D25529
-_YOU_LOSE                 = D254F4
-L_.str.2                  = D25533
-_PLAY_AGAIN               = D254F7
-L_.str.3                  = D2554F
-_reveal                   = D254FA
-_gameRunning              = D254FD
+L_.str                    = D254D3
+_YOU_WIN                  = D254A4
+L_.str.1                  = D254DC
+_YOU_LOSE                 = D254A7
+L_.str.2                  = D254E6
+_PLAY_AGAIN               = D254AA
+L_.str.3                  = D25502
+_reveal                   = D254AD
+_gameRunning              = D254B0
 _prevkey                  = D052D4
 _#gfx_Begin               = D1A901
 _#gfx_End                 = D1A905

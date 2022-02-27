@@ -292,7 +292,7 @@ void gameWin() {
     }
 }
 void gameLoss() {
-    winLossDisplay(0);
+    winLossDisplay(1);
 
     gfx_SetTextFGColor(RED);
     gfx_SetTextScale(2, 2);
