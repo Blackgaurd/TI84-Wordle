@@ -7,8 +7,8 @@
  *----------------------------------------
  */
 
-//! letters will be lowercase
-// TODO: switch letter handling from os to graphx
+//! letters will be lowercase internally
+// TODO: update rectangle drawing to no clip
 
 #include <graphx.h>
 #include <keypadc.h>
@@ -31,14 +31,14 @@ const u16 START_X = (LCD_WIDTH - COLS * SIZE - GAP * (COLS - 1)) / 2;
 const u16 START_Y = (LCD_HEIGHT - ROWS * SIZE - GAP * (ROWS - 1)) / 2;
 
 // color codes
-const color LIGHT_GRAY = 0xde;  // kinda looks blue im no artist
-const color GRAY = 0xb5;
-const color DARK_GRAY = 0x4a;
-const color RED = 0xe0;
-const color YELLOW = 0xe5;
-const color GREEN = 0x04;
-const color BLACK = 0x00;
-const color WHITE = 0xff;
+#define LIGHT_GRAY 0xde  // kinda looks blue im no artist
+#define GRAY 0xb5
+#define DARK_GRAY 0x4a
+#define RED 0xe0
+#define YELLOW 0xe5
+#define GREEN 0x04
+#define BLACK 0x00
+#define WHITE 0xff
 
 // grid & wordle variables
 u8 rowPtr = 0, colPtr = 0;
@@ -94,7 +94,7 @@ void clearScreenSafe(color clr) {
     gfx_FillRectangle(0, 0, LCD_WIDTH, LCD_HEIGHT);
 }
 void drawGrid() {
-    gfx_SetColor(GRAY);
+    gfx_SetColor(DARK_GRAY);
 
     // for some reason x is across and y is down
     // opposite to how 2d arrays are usually done
@@ -109,25 +109,22 @@ void clearSquare(u8 x, u8 y) {
     u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
     gfx_SetColor(WHITE);
     gfx_FillRectangle(posx, posy, SIZE, SIZE);
-    gfx_SetColor(GRAY);
+    gfx_SetColor(DARK_GRAY);
     gfx_Rectangle(posx, posy, SIZE, SIZE);
 }
 void fillSquare(u8 x, u8 y, color clr) {
     u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
     gfx_SetColor(clr);
     gfx_FillRectangle(posx, posy, SIZE, SIZE);
-    gfx_SetColor(GRAY);
+    gfx_SetColor(DARK_GRAY);
     gfx_Rectangle(posx, posy, SIZE, SIZE);
 }
 void dispLetter(char letter, u8 x, u8 y) {
     u8 posx = START_X + x * (SIZE + GAP), posy = START_Y + y * (SIZE + GAP);
 
-    char nullTerminated[2] = {letter, '\0'};
-    os_FontDrawText(nullTerminated, (posx) / 2 + 3, (posy) / 2 + 2);
-
-    // cover edges with rectangle
-    gfx_SetColor(GRAY);
-    gfx_Rectangle(posx, posy, SIZE, SIZE);
+    char nullTerminated[2] = {letter - 'a' + 'A', '\0'};
+    gfx_SetTextScale(3, 3);
+    gfx_PrintStringXY(nullTerminated, posx + 7, posy + 7);
 }
 void winLossDisplay(u8 pos) {
     // pos: 0 is top, 1 is bottom
@@ -261,14 +258,6 @@ void resetGame() {
     drawGrid();
     copyStr(answer, SELECTED[randInt(0, SELECTED_LEN - 1)]);
     rowPtr = colPtr = 0;
-#ifdef DEBUG
-    char nT[6];
-    for (u8 i = 0; i < COLS; i++) {
-        nT[i] = answer[i];
-    }
-    nT[COLS] = '\0';
-    os_FontDrawText(nT, 0, 0);
-#endif
 }
 void gameWin() {
     u8 pos = (rowPtr >= ROWS / 2);
@@ -344,7 +333,7 @@ void evaluateGuess() {
             ansFreq[guess[i] - 'a']--;
             fillSquare(i, rowPtr, YELLOW);
         } else {
-            fillSquare(i, rowPtr, DARK_GRAY);
+            fillSquare(i, rowPtr, GRAY);
         }
         dispLetter(guess[i], i, rowPtr);
     }

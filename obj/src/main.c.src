@@ -158,7 +158,7 @@ _clearScreenSafe:
 _drawGrid:
 	ld	hl, -9
 	call	__frameset
-	ld	hl, -75
+	ld	hl, 74
 	push	hl
 	call	_gfx_SetColor
 	ld	de, 0
@@ -250,7 +250,7 @@ _clearSquare:
 	pop	hl
 	pop	hl
 	pop	hl
-	ld	hl, -75
+	ld	hl, 74
 	push	hl
 	call	_gfx_SetColor
 	pop	hl
@@ -311,7 +311,7 @@ _fillSquare:
 	pop	hl
 	pop	hl
 	pop	hl
-	ld	hl, -75
+	ld	hl, 74
 	push	hl
 	call	_gfx_SetColor
 	pop	hl
@@ -331,63 +331,48 @@ _fillSquare:
 	section	.text,"ax",@progbits
 	public	_dispLetter
 _dispLetter:
-	ld	hl, -8
+	ld	hl, -4
 	call	__frameset
-	ld	a, (ix + 6)
-	ld	iyh, a
-	ld	b, (ix + 9)
+	ld	d, (ix + 9)
 	ld	h, (ix + 12)
-	ld	c, 37
-	ld	iyl, 1
-	ld	e, c
-	ld	d, b
-	mlt	de
-	ld	a, e
+	ld	e, 37
+	ld	c, e
+	ld	b, d
+	mlt	bc
+	ld	a, c
 	add	a, 68
-	ld	e, a
-	ld	l, c
+	ld	(ix - 3), a
+	ld	l, e
 	mlt	hl
 	ld	a, l
 	add	a, 10
-	ex	de, hl
-	ld	e, iyh
-	ex	de, hl
-	ld	(ix - 2), l
+	ld	(ix - 4), a
+	ld	a, (ix + 6)
+	add	a, -32
+	ld	(ix - 2), a
 	ld	(ix - 1), 0
+	ld	hl, 3
+	push	hl
+	push	hl
+	call	_gfx_SetTextScale
+	pop	hl
+	pop	hl
 	or	a, a
 	sbc	hl, hl
-	ld	(ix - 5), hl
-	ld	l, e
-	ld	(ix - 8), hl
-	ld	c, iyl
-	call	__ishru
-	ld.sis	de, 3
-	add.sis	hl, de
-	ld	de, (ix - 5)
-	ld	e, a
-	ld	(ix - 5), de
-	srl	a
-	add	a, 2
-	ld	e, a
-	push	de
 	push	hl
+	pop	iy
+	push	af
+	ld	a, (ix - 3)
+	ld	iyl, a
+	pop	af
+	ld	de, 7
+	add	iy, de
+	ld	l, (ix - 4)
+	add	hl, de
+	push	hl
+	push	iy
 	pea	ix - 2
-	call	_os_FontDrawText
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, -75
-	push	hl
-	call	_gfx_SetColor
-	pop	hl
-	ld	hl, 35
-	push	hl
-	push	hl
-	ld	hl, (ix - 5)
-	push	hl
-	ld	hl, (ix - 8)
-	push	hl
-	call	_gfx_Rectangle
+	call	_gfx_PrintStringXY
 	ld	sp, ix
 	pop	ix
 	ret
@@ -1537,7 +1522,7 @@ BB18_15:
 BB18_18:
 	ld	a, (_rowPtr)
 	ld	l, a
-	ld	de, 74
+	ld	de, -75
 	push	de
 	push	hl
 	ld	hl, (ix - 29)
@@ -9815,46 +9800,6 @@ _START_X:
 _START_Y:
 	dw	10
 
-	section	.rodata,"a",@progbits
-	public	_LIGHT_GRAY
-_LIGHT_GRAY:
-	db	222
-
-	section	.rodata,"a",@progbits
-	public	_GRAY
-_GRAY:
-	db	181
-
-	section	.rodata,"a",@progbits
-	public	_DARK_GRAY
-_DARK_GRAY:
-	db	74
-
-	section	.rodata,"a",@progbits
-	public	_RED
-_RED:
-	db	224
-
-	section	.rodata,"a",@progbits
-	public	_YELLOW
-_YELLOW:
-	db	229
-
-	section	.rodata,"a",@progbits
-	public	_GREEN
-_GREEN:
-	db	4
-
-	section	.rodata,"a",@progbits
-	public	_BLACK
-_BLACK:
-	db	0
-
-	section	.rodata,"a",@progbits
-	public	_WHITE
-_WHITE:
-	db	255
-
 	section	.bss,"aw",@nobits
 	public	_rowPtr
 _rowPtr:
@@ -9946,7 +9891,6 @@ _prevkey:
 	extern	__imulu
 	extern	_gfx_SetColor
 	extern	_gfx_Rectangle
-	extern	_os_FontDrawText
 	extern	_gfx_PrintStringXY
 	extern	_gfx_End
 	extern	__frameset0
