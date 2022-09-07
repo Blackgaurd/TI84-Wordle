@@ -128,9 +128,8 @@ void dispLetter(char letter, u8 x, u8 y) {
 }
 void winLossDisplay(u8 pos) {
     // pos: 0 is top, 1 is bottom
-    const u16 width = gfx_GetStringWidth(PLAY_AGAIN) + 50;
-    const u16 height = 100;
-    const u8 x = (LCD_WIDTH - width) / 2, y = (pos ? 0 : LCD_HEIGHT / 2) + (LCD_HEIGHT / 2 - height) / 2;
+    const u16 width = 220, height = 100;
+    const u16 x = (LCD_WIDTH - width) / 2, y = (!pos * LCD_HEIGHT / 2) + (LCD_HEIGHT / 2 - height) / 2;
 
     // draw outline
     gfx_SetColor(BLACK);
