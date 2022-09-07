@@ -2,14 +2,14 @@ Section          Base   Top    High   Length
 ---------------- ------ ------ ------ -------
 .icon            D1A882 D1A8A0            1Eh
 .init.libs       D1A8A0 D1A8F8            58h
-.libs            D1A8F8 D1A933            3Bh
-.init.clock      D1A933 D1A933             0h
-.init.reruncheck D1A933 D1A933             0h
-.init            D1A933 D1A95D            2Ah
-.fini            D1A95D D1A991            34h
-.text            D1A991 D1B5F4           C63h
-.data            D1B5F4 D25445          9E51h
-.rodata          D25445 D254AA            65h
+.libs            D1A8F8 D1A93D            45h
+.init.clock      D1A93D D1A93D             0h
+.init.reruncheck D1A93D D1A93D             0h
+.init            D1A93D D1A967            2Ah
+.fini            D1A967 D1A99B            34h
+.text            D1A99B D1B606           C6Bh
+.data            D1B606 D25457          9E51h
+.rodata          D25457 D254BC            65h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -29,75 +29,81 @@ ___ctors_count            = 000000
 ___dtors_count            = 000000
 ___fini_array_count       = 000000
 __stack                   = D1A87E
-_os_DisableHomeTextBuffer = D1A991
-_os_EnableHomeTextBuffer  = D1A9A3
-_random                   = D1A9B5
-_srandom                  = D1AA0C
-__state                   = D1B5F4
-_os_FontSelect            = 021E28
-__frameset                = D1AA23
-__frameset0               = D1AA31
-__imulu                   = 000158
-__iremu                   = 000170
-__ishru                   = 000184
-__sand                    = 000200
+__frameset                = D1A99B
+__frameset0               = D1A9A9
+__idvrmu                  = D1A9B4
+__imulu                   = D1A9CC
+__iremu                   = D1A9FC
+__ftol                    = 00027C
+__ftoul                   = 00027C
+__ltof                    = 000284
 __setflag                 = 000218
-.missingappvar            = D25445
-.libloadname              = D2544A
+__ultof                   = 000280
+__sand                    = D1AA03
+_os_DisableHomeTextBuffer = D1AA0C
+_os_EnableHomeTextBuffer  = D1AA1E
+_random                   = D1AA30
+_srandom                  = D1AA87
+__state                   = D1B606
+_os_FontSelect            = 021E28
+__ishru                   = 000184
+.missingappvar            = D25457
+.libloadname              = D2545C
 .libloadnamelen           = 000007
-.webaddress               = D25452
-__start                   = D1A933
-___exithl                 = D1A95D
-skip._exit                = D1A95D
-skip.__Exit               = D1A95D
-skip._abort               = D1A95D
-_exit.sp                  = D1A95E
-_exit.flash_wait_states   = D1A968
-_copyStr                  = D1AA3C
-_inStr                    = D1AA62
-_strCmp                   = D1AA8F
-_revealAnswer             = D1AAEC
-_clearScreenSafe          = D1AB11
-_drawGrid                 = D1AB37
-_clearSquare              = D1ABAA
-_fillSquare               = D1AC1A
-_dispLetter               = D1AC8F
-_winLossDisplay           = D1ACF0
-_enterLetter              = D1AD73
-_backspace                = D1ADAC
-_handleKeys               = D1ADC8
-_inDictionary             = D1AFDC
-_inSelected               = D1B099
-_resetGame                = D1B156
-_gameWin                  = D1B195
-_gameLoss                 = D1B292
-_evaluateGuess            = D1B38F
-_init                     = D1B56C
-_mainGame                 = D1B58E
-_main                     = D1B5D9
-_SELECTED                 = D1B604
-_DICTIONARY               = D1E31D
+.webaddress               = D25464
+__start                   = D1A93D
+___exithl                 = D1A967
+skip._exit                = D1A967
+skip.__Exit               = D1A967
+skip._abort               = D1A967
+_exit.sp                  = D1A968
+_exit.flash_wait_states   = D1A972
+_copyStr                  = D1AA9E
+_inStr                    = D1AAC4
+_strCmp                   = D1AAF1
+_revealAnswer             = D1AB39
+_clearScreenSafe          = D1AB5E
+_drawGrid                 = D1AB83
+_clearSquare              = D1ABF6
+_fillSquare               = D1AC65
+_dispLetter               = D1ACD4
+_winLossDisplay           = D1AD35
+_enterLetter              = D1ADB8
+_backspace                = D1ADF1
+_handleKeys               = D1AE0D
+_inDictionary             = D1B017
+_inSelected               = D1B0C6
+_resetGame                = D1B175
+_gameWin                  = D1B1B3
+_gameLoss                 = D1B2A8
+_evaluateGuess            = D1B3A4
+_init                     = D1B581
+_mainGame                 = D1B5A0
+_main                     = D1B5EB
+_SELECTED                 = D1B616
+_DICTIONARY               = D1E32F
 _rowPtr                   = D052C6
 _colPtr                   = D052C7
 _answer                   = D052C8
 _guess                    = D052CE
-L_.str                    = D25467
-_YOU_WIN                  = D25438
-L_.str.1                  = D25470
-_YOU_LOSE                 = D2543B
-L_.str.2                  = D2547A
-_PLAY_AGAIN               = D2543E
-L_.str.3                  = D25496
-_reveal                   = D25441
-_gameRunning              = D25444
+_.str                     = D25479
+_YOU_WIN                  = D2544A
+_.str.1                   = D25482
+_YOU_LOSE                 = D2544D
+_.str.2                   = D2548C
+_PLAY_AGAIN               = D25450
+_.str.3                   = D254A8
+_reveal                   = D25453
+_gameRunning              = D25456
 _prevkey                  = D052D4
-_#gfx_Begin               = D1A901
-_#gfx_End                 = D1A905
-_#gfx_SetColor            = D1A909
-_#gfx_PrintStringXY       = D1A90D
-_#gfx_SetTextFGColor      = D1A911
-_#gfx_GetStringWidth      = D1A915
-_#gfx_Rectangle           = D1A919
-_#gfx_FillRectangle       = D1A91D
-_#gfx_SetTextScale        = D1A921
-_#kb_Scan                 = D1A92F
+lib.LibLoad               = D1A8F8
+_#kb_Scan                 = D1A90C
+_#gfx_Begin               = D1A919
+_#gfx_End                 = D1A91D
+_#gfx_SetColor            = D1A921
+_#gfx_PrintStringXY       = D1A925
+_#gfx_SetTextFGColor      = D1A929
+_#gfx_GetStringWidth      = D1A92D
+_#gfx_Rectangle           = D1A931
+_#gfx_FillRectangle       = D1A935
+_#gfx_SetTextScale        = D1A939

@@ -5,7 +5,8 @@
 NAME = WORDLE
 ICON = icon.png
 DESCRIPTION = "Wordle for TI-84 Plus CE"
-COMPRESSED = NO # YES or NO
+COMPRESSED = YES
+COMPRESSED_MODE = zx7 # zx0 is so slow
 ARCHIVED = NO
 
 CFLAGS = -Wall -Wextra -Oz #-DDEBUG
