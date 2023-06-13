@@ -2,6 +2,8 @@
 
 Porting Wordle onto the TI-84 **Plus CE** using the CE C/C++ Toolchain.
 
+![demo image](demo.webp)
+
 ## How to play
 
 - Enter letters by pressing keys with corresponding letter in GREEN (alpha keys)
